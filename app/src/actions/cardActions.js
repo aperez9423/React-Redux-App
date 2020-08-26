@@ -8,7 +8,7 @@ export const getCard = () => (dispatch) => {
     console.log('getCard action');
     dispatch({ type: FETCHING_CARD_START});
     axios   
-        .get('https://api.magicthegathering.io/v1/cards')
+        .get('https://cors-anywhere.herokuapp.com/https://api.magicthegathering.io/v1/cards')
         .then(res => {
             dispatch({ 
                 type: FETCHING_CARD_SUCCESS, 

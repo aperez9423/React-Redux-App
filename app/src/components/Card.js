@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
-import axios from 'axios';
 
-const Card = (props) => {
-    const [cardData, setCardData] = useState({});
-    useEffect(() => {
-        axios.get(props.card)
-        .then(res => setCardData(res.data))
-        .catch(err => console.log(err));
-    }, [props.card]);
-
+const Card = ({name, image}) => {
     return(
         <div>
-            <Name>{ cardData.name }</Name>
+            <Name> { name } </Name>
             <div>
-                <CardImage src= { cardData.imageUrl } alt='card'/>
+            <CardImage src= { image } alt='card'/>
             </div>
         </div>
     );

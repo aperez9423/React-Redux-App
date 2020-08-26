@@ -1,37 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { getCard } from '../actions/cardActions';
+import { connect } from 'react-redux';
 
 import Card from './Card'
 
-const CardList = props => {
-    const [card, setCard] = useState(props.card);
+import styled from 'styled-components';
 
-    console.log(card);
+const CardList = (props) => {  
 
-    useEffect(() => {
-        setCard(props.card);
-    }, [props.card])
+    const fetchCards = e => {
+        e.preventDefault();
+        props.getCard();
+    }
     
+    console.log(props.cards.map);
+
     return (
-        <div>
-            <h2>Welcome to Magic the Gathering!</h2>
-            {props.isFetching && <p>Fetching your Cards</p>}
+        <div className='card-list'>
+            {props.isFetching && <p>Fetching your cards</p>}    
             <div>
-                <div>
-                    {card.length > 0 ? card.map ((creature, i) => <Card key={i} creature={creature}/>) : <p>Loading...</p>}
-                </div>
+            {props.cards.map(cards => (
+                <Card 
+                    key={cards.id} 
+                    name={cards.name}
+                    image={cards.imageUrl}
+                />
+            ))}
             </div>
-            {props.error && <p className='error'>{props.error}</p>}
+            {props.error && <p>{props.error}</p>}
+            <Button onClick={fetchCards}>Fetch Cards!</Button>
         </div>
     )
 };
 
 const mapStateToProps = (state) => {
     return {
-        card: state.card,
+        cards: state.cards,
         isFetching: state.isFetching, 
         error: state.error};
 };
 
 export default connect(mapStateToProps, { getCard })(CardList);
+
+const Button = styled.button`
+font-size: 1.5rem;
+  border: .2rem solid black;
+  border-radius: .5rem;
+  background-color: lightgray;
+`
+

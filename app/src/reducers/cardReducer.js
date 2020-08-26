@@ -5,7 +5,7 @@ import {
 } from '../actions/cardActions';
 
 const initialState = {
-    card: "",
+    cards: [],
     isFetching: false,
     error: ""
 };
@@ -21,7 +21,7 @@ const cardReducer = (state = initialState, action) => {
         case FETCHING_CARD_SUCCESS:
             return {
                 ...state,
-                card: action.payload.name, isFetching: false
+                cards: action.payload, isFetching: false
             };
         case FETCHING_CARD_FAILURE: 
             return {
